@@ -1,12 +1,43 @@
 require 'rubygems'
 require 'sinatra'
+require 'pony'
 
 get '/' do
   erb :index
 end
 
 post '/' do
-  p params[:participant].inspect
+  mails = randomize_mails params[:participant]
+  
+  mails.each do |item|
+    Pony.mail :to => item[:mail],
+      :from => ENV['SANTA_MAIL_FROM'],
+      :subject => params[:subject],
+      :body => params[:message].gsub('{name}', item[:name]),
+      :via => :smtp,
+      :smtp => {
+        :host     => ENV['SANTA_MAIL_HOST'],
+        :port     => ENV['SANTA_MAIL_PORT'],
+        :user     => ENV['SANTA_MAIL_USER'],
+        :password => ENV['SANTA_MAIL_PASSWORD'],
+        :auth     => ENV['SANTA_MAIL_AUTH'].to_sym,  # :plain, :login, :cram_md5, no auth by default
+        :domain   => ENV['SANTA_MAIL_DOMAIN']        # the HELO domain provided by the client to the server
+      }
+  end
+  
+  "Teilnehmer wurden benachrichtigt."
+end
+
+def randomize_mails participants
+  srand(Time.now.hash)
+  participants = participants.sort_by { rand }
+  
+  mailing = Array.new
+  (0...participants.length).each do |i|
+    mailing.push({:mail => participants[i-1]['mail'], :name => participants[i]['name'] })
+  end
+  
+  return mailing
 end
 
 __END__
@@ -60,14 +91,12 @@ __END__
   <input type="submit" value="mehr Teilnehmer" onclick="addRow(); return false;">
   
   <p>
-    Betreff: <input type="text" name="subject" />
+    Betreff: <input type="text" name="subject" value="Ho Ho Ho!" />
   </p>
   <p>
     Nachricht:<br />
     <textarea name="message" rows="8" cols="40">
 Ho Ho Ho!
-
-Hier spricht Santa.
 
 {name} würde sich über ein Geschenk von dir freuen.
 
