@@ -9,7 +9,8 @@ get '/' do
 end
 
 post '/' do
-  mails = randomize_mails params[:participant]
+  mails = cleanup params[:participant]
+  mails = randomize mails
   
   mails.each do |item|
     Pony.mail :to => item[:mail],
@@ -30,7 +31,7 @@ post '/' do
   "Teilnehmer wurden benachrichtigt."
 end
 
-def randomize_mails participants
+def randomize participants
   srand(Time.now.hash)
   participants = participants.sort_by { rand }
   
@@ -40,6 +41,10 @@ def randomize_mails participants
   end
   
   return mailing
+end
+
+def cleanup mails
+  mails.delete_if { |mail| p mail; (mail['name'].blank? || mail['mail'].blank?) }
 end
 
 __END__
