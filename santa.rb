@@ -2,6 +2,8 @@ require 'rubygems'
 require 'sinatra'
 require 'pony'
 
+set :public, File.dirname(__FILE__) + '/static'
+
 get '/' do
   erb :index
 end
@@ -48,31 +50,27 @@ __END__
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de">
   <head>
     <title>Secret Santa</title>
+    <link rel="stylesheet" href="style.css" type="text/css" media="screen" charset="utf-8">
     <script src="http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="javascript.js" type="text/javascript" charset="utf-8"></script>
   </head>
   <body>
-    <script type="text/javascript" charset="utf-8">
-      <![CDATA[
-        function addRow() {
-          $('table#participants').append('
-            <tr>
-              <td><input type="text" name="participant[][name]" size="15" /></td>
-              <td><input type="text" name="participant[][mail]" size="30" /></td>
-            </tr>');
-        }
-      ]]>
-    </script>
     <%= yield %>
   </body>
 </html>
 
 @@ index
-<h1>Secret Santa</h1>
+<h1>
+  <img src="/icon/gift_box_32.png" />&nbsp;&nbsp;Secret Santa
+</h1>
 
-<h2>Teilnehmer:</h2>
-
-<form action="/" method="post">
-  <div>
+<div id="content">
+  <h2>Teilnehmer:</h2>
+  <p>
+    Trage den Namen und die E-Mail jedes Teilnehmers in das Formular ein.
+  </p>
+  
+  <form action="/" method="post">
     <table border="0" cellspacing="0" cellpadding="0" id="participants">
       <tbody>
         <tr>
@@ -93,25 +91,33 @@ __END__
         </tr>
       </tbody>
     </table>
-    <input type="submit" value="mehr Teilnehmer" onclick="addRow(); return false;" />
-  </div>
-  
-  <p>
-    Betreff: <input type="text" name="subject" value="Ho Ho Ho!" />
-  </p>
-  <p>
-    Nachricht:<br />
-    <textarea name="message" rows="8" cols="40">
+    <input type="submit" class="addrow" value="mehr Teilnehmer" />
+    
+    <h2>Nachricht:</h2>
+    <p>
+      Du kannst nun die E-Mail, die jedem Teilnehmer zugesendet wird, anpassen.
+    </p>
+    
+    <div id="mail">
+      <label for="subject">Betreff:</label><br />
+      <input type="text" name="subject" value="Ho Ho Ho!" />
+      <br /><br />
+      Nachricht:<br />
+      <textarea name="message" rows="8" cols="40">
 Ho Ho Ho!
 
 {name} würde sich über ein Geschenk von dir freuen.
 
 Frohe Weihnachten wünscht,
 Santa Claus
-    </textarea>
-  </p>
-  
-  <p><input type="submit" value="Ho ho ho!" /></p>
-</form>
-
+      </textarea>
+    </div>
+    
+    <p class="small">
+      Beachte: das Schlüsselwort "{name}" wird später mit dem Namen des Teilnehmers der beschenkt werden soll ersetzt.
+    </p>
+    
+    <p><input type="submit" value="Ho ho ho! Jetzt abschicken." /></p>
+  </form>
+</div>
 

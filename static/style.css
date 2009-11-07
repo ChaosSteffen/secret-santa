@@ -1,0 +1,63 @@
+body {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  margin: 0px;
+  padding: 0px;
+  font-size: 75%;
+}
+
+h1 {
+  font-family: Georgia, Georgia, serif;
+  font-weight: normal;
+  font-size: 280%;
+  margin: 0px;
+  background: #900;
+  color: #FFF;
+  border: #900 0.5em solid;
+}
+
+h2{
+  clear: both;
+}
+
+div#content {
+  margin-left: 14px;
+  width: 40em;
+}
+
+table {
+  width: 100%;
+}
+
+table input {
+  width: 95%;
+}
+
+input[type=submit] {
+  float: right;
+}
+
+div#mail {
+  border: #AAA 1px solid;
+  padding: 1em;
+  background: lemonchiffon;
+  box-shadow:4px 4px 8px #999;
+  -webkit-box-shadow:4px 4px 8px #999;
+  -moz-box-shadow:4px 4px 8px #999;
+}
+div#mail input[type=text] {
+  width: 41em;
+}
+div#mail textarea {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-size: 92%;
+  width: 41em;
+}
+
+div#mail input[type=text],
+div#mail textarea {
+  border: #999 1px solid;
+}
+
+p.small {
+  font-size: 80%;
+}
