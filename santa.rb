@@ -52,13 +52,15 @@ __END__
   </head>
   <body>
     <script type="text/javascript" charset="utf-8">
-      function addRow() {
-        $('table#participants').append('
-          <tr>
-            <td><input type="text" name="participant[][name]" size="15" /></td>
-            <td><input type="text" name="participant[][mail]" size="30" /></td>
-          </tr>');
-      }
+      <![CDATA[
+        function addRow() {
+          $('table#participants').append('
+            <tr>
+              <td><input type="text" name="participant[][name]" size="15" /></td>
+              <td><input type="text" name="participant[][mail]" size="30" /></td>
+            </tr>');
+        }
+      ]]>
     </script>
     <%= yield %>
   </body>
@@ -70,25 +72,29 @@ __END__
 <h2>Teilnehmer:</h2>
 
 <form action="/" method="post">
-  <table border="0" cellspacing="0" cellpadding="0" id="participants">
-    <tr>
-      <th>Name</th>
-      <th>E-Mail</th>
-    </tr>
-    <tr>
-      <td><input type="text" name="participant[][name]" size="15" /></td>
-      <td><input type="text" name="participant[][mail]" size="30" /></td>
-    </tr>
-    <tr>
-      <td><input type="text" name="participant[][name]" size="15" /></td>
-      <td><input type="text" name="participant[][mail]" size="30" /></td>
-    </tr>
-    <tr>
-      <td><input type="text" name="participant[][name]" size="15" /></td>
-      <td><input type="text" name="participant[][mail]" size="30" /></td>
-    </tr>
-  </table>
-  <input type="submit" value="mehr Teilnehmer" onclick="addRow(); return false;">
+  <div>
+    <table border="0" cellspacing="0" cellpadding="0" id="participants">
+      <tbody>
+        <tr>
+          <th>Name</th>
+          <th>E-Mail</th>
+        </tr>
+        <tr>
+          <td><input type="text" name="participant[][name]" size="15" /></td>
+          <td><input type="text" name="participant[][mail]" size="30" /></td>
+        </tr>
+        <tr>
+          <td><input type="text" name="participant[][name]" size="15" /></td>
+          <td><input type="text" name="participant[][mail]" size="30" /></td>
+        </tr>
+        <tr>
+          <td><input type="text" name="participant[][name]" size="15" /></td>
+          <td><input type="text" name="participant[][mail]" size="30" /></td>
+        </tr>
+      </tbody>
+    </table>
+    <input type="submit" value="mehr Teilnehmer" onclick="addRow(); return false;" />
+  </div>
   
   <p>
     Betreff: <input type="text" name="subject" value="Ho Ho Ho!" />
@@ -105,7 +111,7 @@ Santa Claus
     </textarea>
   </p>
   
-  <input type="submit" value="Ho ho ho!">
+  <p><input type="submit" value="Ho ho ho!" /></p>
 </form>
 
 
