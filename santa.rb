@@ -19,6 +19,7 @@ post '/' do
       :from => ENV['SANTA_MAIL_FROM'],
       :subject => params[:subject],
       :body => params[:message].gsub('{name}', item[:name]),
+      :content_type => "text/plain; charset=utf-8",
       :via => :smtp,
       :smtp => {
         :host     => ENV['SANTA_MAIL_HOST'],
